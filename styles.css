@@ -1,0 +1,37 @@
+body {
+    background-color: antiquewhite;
+}
+
+.calculator {
+    display:flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    
+    
+}
+.display {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 10px;
+    min-width: 450px;
+    min-height: 200px;
+    background-color: lightblue;
+    font-size: 80px;
+}
+.buttons {
+    display: flex;
+    flex-wrap: wrap;
+
+}
+button {
+    flex-basis: 25%;
+    aspect-ratio: 1;
+    font-size: 20px;
+    
+}
+.equals {
+    flex-grow: 2;
+}
