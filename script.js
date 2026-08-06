@@ -138,7 +138,8 @@ function update() {
                 display.textContent = b;
             } else if (b !== null && sum !== null) {
                 b = String(button.textContent)
-                display.textContent = operate(+sum, +b, operand)
+                sum = operate(+sum, +b, operand)
+                display.textContent = sum
             }
             
            
