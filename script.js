@@ -38,13 +38,8 @@ let sum = null;
 
 //NOTES: CAN ONLY FIT 11 figures on display. 12 IF NUMERIC VALUE IS 1.
 
-//TODO: // Zero division still not working... concatenating b still in odd cases.
+//TODO: // 48/2 creates an error... 2 remains stuck on the display.... meaning the b variable is the issue
 
-//Focus on zero division error and scrapping results if user inputs numeric value after sumDisplayed.
-
-
-// Logic for zero division:
-//If b variable is 0 and operand === '/', display.textContent = 'Bozo Alert' and nullify()
 
 //Initialize all selector variables
 const display = document.querySelector('.display');
@@ -139,9 +134,17 @@ function update() {
                 operand = button.textContent;
                 operandButtonPressed = true;
             }
-
+// If b does not equal 0 AND if operand does NOT equal '/'. This means that both need to be true to run the code
             if (a !== null && b !== null && operandButtonPressed) {
-                if (b != 0 && operand !== '/'){
+                if (b === '0' && operand === '/'){
+                    console.log(b != 0);
+                    console.log(operand !== '/');
+                    display.textContent = 'Zero Div Err';
+                    console.log(a);
+                    console.log(b);
+                    console.log(operand);
+                    nullify();
+                } else {
                     sum = operate(+a, +b, operand);
                     console.log(operand);
                     console.log(a);
@@ -152,14 +155,6 @@ function update() {
                     sumDisplayed = true;
                     b = null;
                     operand = button.textContent;
-                } else if (b == 0 && operand === '/'){
-                    console.log(b != 0);
-                    console.log(operand !== '/');
-                    display.textContent = 'Zero Div Err';
-                    console.log(a);
-                    console.log(b);
-                    console.log(operand);
-                    nullify();
                 }
             } 
 
