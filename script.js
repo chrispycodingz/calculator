@@ -31,24 +31,15 @@ let b = null;
 let operand = null;
 let sum = null;
 
-// If the value of variable a is empty
-// fill it with clicked value. Else fill b
-// If sum has been displayed. Flag it as true and set conditional to exclusively update a 
-// with value of sum and for b to take any numeric update
 
 
 
 
 
 //NOTES: CAN ONLY FIT 11 figures on display. 12 IF NUMERIC VALUE IS 1.
-//TODO: CARRY OPERATION FORWARD IF OPERATOR PRESSED AFTER RESULT IS DISPLAYED
-//ELSE: DELETE ALL VALUES AND RESET FLAGS
 
 
-//If a and b and operand aren't null and equals hasnt been called AND operator is pressed again, display value.
-//If a is set to sum skip the numeric.forEach operation for a and move to b.
-
-//IF AC IS PRESSED... THE SECOND OPERATOR NO LONGER WORKS 
+//Focus on zero division error and scrapping results if user inputs numeric value after sumDisplayed.
 
 
 //Initialize all selector variables
@@ -59,17 +50,7 @@ const operator = document.querySelectorAll('.buttons .operator');
 const equal = document.querySelector('.equals');
 const clear = document.querySelector('.clear');
 
-function nullify() {
-    a = null;
-    b = null;
-    operand = null;
-    sum = null;
-    equalButtonPressed = false;
-    operandButtonPressed = false;
-    aBypass = false;
-    sumDisplayed = false;
-    
-}
+
 
 //Update function runs all operations. 
 function update() {
@@ -78,6 +59,17 @@ function update() {
     let operandButtonPressed = false;
     let aBypass = false;
     let sumDisplayed = false;
+
+    function nullify() {
+        a = null;
+        b = null;
+        operand = null;
+        sum = null;
+        equalButtonPressed = false;
+        operandButtonPressed = false;
+        aBypass = false;
+        sumDisplayed = false;
+    }
 
     //Clear button function. TOTALLY WORKING!
     clear.addEventListener('click', () => {
@@ -114,6 +106,7 @@ function update() {
                 display.textContent = b;
             } else if (b !== null && b.length >= 1) {
                 b = b + String(button.textContent);
+                display.textContent = b;
             }
         })
     );
