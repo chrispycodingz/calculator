@@ -39,7 +39,7 @@ let sum = null;
 //NOTES: CAN ONLY FIT 11 figures on display. 12 IF NUMERIC VALUE IS 1.
 
 
-//Focus on zero division error and scrapping results if user inputs numeric value after sumDisplayed.
+//Focus on scrapping results if user inputs numeric value after sumDisplayed.
 
 
 //Initialize all selector variables
@@ -86,6 +86,20 @@ function update() {
             
             display.textContent = operate(+a, +b, operand);
             equalButtonPressed = true;
+        } else {
+            display.textContent = 'Bozo alert';
+            nullify();
+        }
+
+        if (b == 0 && operand === '/') {
+            display.textContent = 'Zero Div Err';
+            console.log(a);
+            console.log(b);
+            console.log(operand);
+            nullify();
+            console.log(a);
+            console.log(b);
+            console.log(operand);
         }
         
     });
@@ -112,23 +126,27 @@ function update() {
     );
     operator.forEach(button => 
         button.addEventListener('click', () => {
-            if (a !== null && operandButtonPressed !== true) {
+            if (a !== null && b === null) {
                 operand = button.textContent;
                 operandButtonPressed = true;
             }
 
             if (a !== null && b !== null && operandButtonPressed) {
-                
-                sum = operate(+a, +b, operand);
-                console.log(operand);
-                console.log(a);
-                console.log(b);
-                console.log(sum);
-                display.textContent = sum;
-                a = sum;
-                sumDisplayed = true;
-                b = null;
-                operand = button.textContent;
+                if (b != 0 && operand !== '/'){
+                    sum = operate(+a, +b, operand);
+                    console.log(operand);
+                    console.log(a);
+                    console.log(b);
+                    console.log(sum);
+                    display.textContent = sum;
+                    a = sum;
+                    sumDisplayed = true;
+                    b = null;
+                    operand = button.textContent;
+                } else if (b == 0 && operand === '/'){
+                    display.textContent = 'Zero Div Err';
+                    nullify();
+                }
             } 
 
         })
