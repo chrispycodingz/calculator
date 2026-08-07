@@ -38,9 +38,13 @@ let sum = null;
 
 //NOTES: CAN ONLY FIT 11 figures on display. 12 IF NUMERIC VALUE IS 1.
 
+//TODO: // Zero division still not working... concatenating b still in odd cases.
 
-//Focus on scrapping results if user inputs numeric value after sumDisplayed.
+//Focus on zero division error and scrapping results if user inputs numeric value after sumDisplayed.
 
+
+// Logic for zero division:
+//If b variable is 0 and operand === '/', display.textContent = 'Bozo Alert' and nullify()
 
 //Initialize all selector variables
 const display = document.querySelector('.display');
@@ -114,7 +118,12 @@ function update() {
                     a = a + String(button.textContent);
                     display.textContent = a;
                 }
+            } else if (sumDisplayed && b !== null) {
+                nullify();
+                a = String(button.textContent);
+                display.textContent = a;
             }
+
             if (operandButtonPressed && b === null || b == 0) {
                 b = String(button.textContent);
                 display.textContent = b;
@@ -144,7 +153,12 @@ function update() {
                     b = null;
                     operand = button.textContent;
                 } else if (b == 0 && operand === '/'){
+                    console.log(b != 0);
+                    console.log(operand !== '/');
                     display.textContent = 'Zero Div Err';
+                    console.log(a);
+                    console.log(b);
+                    console.log(operand);
                     nullify();
                 }
             } 
