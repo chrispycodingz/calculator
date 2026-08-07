@@ -50,7 +50,6 @@ let sum = null;
 
 //IF AC IS PRESSED... THE SECOND OPERATOR NO LONGER WORKS 
 
-//
 
 //Initialize all selector variables
 const display = document.querySelector('.display');
@@ -59,6 +58,18 @@ const numeric = document.querySelectorAll('.buttons .numeric');
 const operator = document.querySelectorAll('.buttons .operator');
 const equal = document.querySelector('.equals');
 const clear = document.querySelector('.clear');
+
+function nullify() {
+    a = null;
+    b = null;
+    operand = null;
+    sum = null;
+    equalButtonPressed = false;
+    operandButtonPressed = false;
+    aBypass = false;
+    sumDisplayed = false;
+    
+}
 
 //Update function runs all operations. 
 function update() {
@@ -70,108 +81,65 @@ function update() {
 
     //Clear button function. TOTALLY WORKING!
     clear.addEventListener('click', () => {
-        a = null;
-        b = null;
-        operand = null;
-        sum = null;
-        equalButtonPressed = false;
-        operandButtonPressed = false;
-        aBypass = false;
-        sumDisplayed = false;
+        nullify();
         display.textContent = 0;
+        console.log(a);
+        console.log(b);
+        console.log(operand)
     });
     
     //Equal button function.. TOTALLY WORKING! (INCULDING 0 DIVISION!)
     equal.addEventListener('click', () => {
         if (a !== null && operand !== null && b !== null) {
-            console.log(a);
-            console.log(b);
-            console.log(operand);
+            
             display.textContent = operate(+a, +b, operand);
             equalButtonPressed = true;
         }
-        if (a === null || b === null || operand === null || b == 0 && operand === '/'){
-            display.textContent = "Bozo Alert"
-        }
+        
     });
-    // This function is absolutely gacked. Can't really make sense of it TBH... and i just wrote it yesterday LOL.
-    numeric.forEach(button => {
+    // 
+    numeric.forEach(button => 
         button.addEventListener('click', () => {
-            if (operandButtonPressed && sum !== null) {
-                a = +sum;
-                aBypass = true;
-                console.log(a);
-                
-            }
-            if (aBypass === false){
-                
-                if (a === null) {
-                    a = String(button.textContent);
+            if (sumDisplayed === false){
+                if (a === null || a == 0 && b === null){
+                    a = String(button.textContent)
                     display.textContent = a;
-                    
-                } else if (a !== '0' && operand === null){
+                } else if (a.length >= 1 && operandButtonPressed === false) {
                     a = a + String(button.textContent);
                     display.textContent = a;
-                    
-                } else if (a.length === 1 && a === '0' && operand === null) {
-                    a = null;
-                    a = String(button.textContent);
-                    display.textContent = a;
-                    
                 }
             }
-        });
-    });
-    // CODE SMELL: Repeats the same function as before... figure out how to incorperate it into the above function...
-    numeric.forEach(button => {
-        button.addEventListener('click', () => {
-            if (b === null && operand !== null) {
+            if (operandButtonPressed && b === null || b == 0) {
                 b = String(button.textContent);
                 display.textContent = b;
-            } else if (b !== '0' && b !== null && aBypass === false){
+            } else if (b !== null && b.length >= 1) {
                 b = b + String(button.textContent);
-                display.textContent = b;
-                console.log(b)
-            } else if (b !== null && b.length === 1 && b === '0') {
-                b = null;
-                b = String(button.textContent);
-                display.textContent = b;
-            } else if (b !== null && sum !== null) {
-                b = String(button.textContent)
-                sum = operate(+sum, +b, operand)
-                display.textContent = sum
             }
-            
-           
-            
-        });
-    });
-    // Operator function... a bit convoluted as well in the conditionals.
-    operator.forEach(button => {
+        })
+    );
+    operator.forEach(button => 
         button.addEventListener('click', () => {
-            
-            if (a !== null && operand !== null && b!== null && equalButtonPressed === false && operandButtonPressed === true) {
-                sum = operate(+a, +b, operand);
-                display.textContent = sum
-                sumDisplayed = true;
-            }
-            if (operand === null || operandButtonPressed === true) {
-                operand = String(button.textContent);
-                console.log(operand)
+            if (a !== null && operandButtonPressed !== true) {
+                operand = button.textContent;
                 operandButtonPressed = true;
-            } 
-            if (operand !== null && aBypass) {
-                sum = operate(+a, +b, operand);
-                console.log('Hey its working!')
-                display.textContent = sum
-                sumDisplayed = true;
             }
 
-            
-            
-        });
-    }); 
-  
+            if (a !== null && b !== null && operandButtonPressed) {
+                
+                sum = operate(+a, +b, operand);
+                console.log(operand);
+                console.log(a);
+                console.log(b);
+                console.log(sum);
+                display.textContent = sum;
+                a = sum;
+                sumDisplayed = true;
+                b = null;
+                operand = button.textContent;
+            } 
+
+        })
+    )
     
 
 }
