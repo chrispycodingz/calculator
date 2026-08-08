@@ -38,8 +38,8 @@ let sum = null;
 
 //NOTES: CAN ONLY FIT 11 figures on display. 12 IF NUMERIC VALUE IS 1.
 
-//TODO: // 48/2 creates an error... 2 remains stuck on the display.... meaning the b variable is the issue
-
+//TODO: Following use of equals operator, the b variable sticks and is appended upon with new numeric value rather than clearing.
+// must track whether 
 
 //Initialize all selector variables
 const display = document.querySelector('.display');
@@ -82,8 +82,10 @@ function update() {
     //Equal button function.. TOTALLY WORKING! (INCULDING 0 DIVISION!)
     equal.addEventListener('click', () => {
         if (a !== null && operand !== null && b !== null) {
-            
-            display.textContent = operate(+a, +b, operand);
+            sum = operate(+a, +b, operand);
+            sum = Math.round(sum * 100) / 100;
+            display.textContent = sum;
+            sumDisplayed = true;
             equalButtonPressed = true;
         } else {
             display.textContent = 'Bozo alert';
@@ -146,10 +148,8 @@ function update() {
                     nullify();
                 } else {
                     sum = operate(+a, +b, operand);
-                    console.log(operand);
-                    console.log(a);
-                    console.log(b);
-                    console.log(sum);
+                    sum = Math.round(sum * 100) / 100;
+
                     display.textContent = sum;
                     a = sum;
                     sumDisplayed = true;
